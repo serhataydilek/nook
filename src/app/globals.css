@@ -1,0 +1,173 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-paper: #f9f7f1;
+  --color-ink: #1b1b1b;
+  --color-muted: #77736d;
+  --color-card: #fffdf8;
+  --color-accent: #f1db83;
+  --color-error: #a6402d;
+
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-hand: var(--font-patrick-hand), "Segoe Print", "Bradley Hand", cursive;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    /* faint paper grain */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-ink);
+  }
+
+  /* hand-drawn dashed focus ring */
+  :focus-visible {
+    outline: 2px dashed var(--color-ink);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* wobbly "hand-cut" fill shapes */
+  .sketch-radius {
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  }
+  .sketch-radius-sm {
+    border-radius: 125px 10px 115px 10px / 10px 115px 10px 125px;
+  }
+
+  /* highlighter mark behind active nav / filter labels */
+  .highlighter {
+    display: inline-block;
+    background-color: var(--color-accent);
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    padding: 0 0.35rem;
+    transform: rotate(-1deg);
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  /* faint ruled lines for notebook-page surfaces */
+  .notebook-lines {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 30px,
+      rgb(27 27 27 / 0.06) 30px,
+      rgb(27 27 27 / 0.06) 31px
+    );
+  }
+
+  /* thicker pen stroke when a sketch box contains a focused field */
+  .sketch-box:focus-within svg rect {
+    stroke-width: 2.4;
+  }
+}
+
+@layer utilities {
+  .sketch-shadow {
+    box-shadow: 2.5px 3px 0 0 rgb(27 27 27 / 0.1);
+  }
+  .sketch-shadow-lg {
+    box-shadow: 4px 6px 0 0 rgb(27 27 27 / 0.12);
+  }
+}
+
+/* pen underline: drawn on hover/focus */
+.pen-underline {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+.group:hover .pen-underline,
+.group:focus-visible .pen-underline {
+  animation: pen-draw 0.45s ease-out;
+}
+@keyframes pen-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* hand-drawn check mark confirmation */
+.check-pop {
+  animation: check-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  transform-origin: center;
+}
+.check-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: pen-draw 0.3s 0.12s ease-out forwards;
+}
+@keyframes check-pop {
+  0% {
+    transform: scale(0) rotate(-14deg);
+  }
+  100% {
+    transform: scale(1) rotate(-4deg);
+  }
+}
+
+/* restrained entrance animations */
+.animate-fade-rise {
+  animation: fade-rise 0.35s ease-out both;
+}
+@keyframes fade-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade {
+  animation: fade-in 0.2s ease-out both;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-toast {
+  animation: toast-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 12px) rotate(-2deg);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) rotate(-1deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
