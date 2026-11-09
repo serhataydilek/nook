@@ -6,7 +6,7 @@ export default function Logo() {
     <Link
       href="/"
       aria-label="nook — home"
-      className="group w-fit font-hand text-[34px] leading-none tracking-tight text-ink"
+      className="nook-logo group w-fit font-hand leading-none tracking-tight text-ink"
     >
       <UnderlineText>nook.</UnderlineText>
     </Link>

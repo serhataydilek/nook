@@ -4,6 +4,7 @@ import { Bookmark, Folder, Home, Settings } from "lucide-react";
 import DoodleIcon from "../sketch/DoodleIcon";
 import Logo from "../sketch/Logo";
 import SketchLine from "../sketch/SketchLine";
+import SketchBorder from "../sketch/SketchBorder";
 import type { View } from "@/lib/types";
 
 const NAV: { id: View; label: string; icon: typeof Home }[] = [
@@ -20,11 +21,11 @@ export interface SidebarProps {
 
 export default function Sidebar({ view, onChange }: SidebarProps) {
   return (
-    <aside className="relative flex h-16 shrink-0 items-center gap-4 px-5 md:h-auto md:w-[264px] md:flex-col md:items-stretch md:gap-0 md:px-8 md:py-9">
+    <aside className="nook-sidebar relative flex shrink-0 items-center gap-4 md:flex-col md:items-stretch md:gap-0">
       <Logo />
       <nav
         aria-label="Main navigation"
-        className="flex gap-1 overflow-x-auto md:mt-12 md:flex-col md:overflow-visible"
+        className="nook-nav flex overflow-x-auto md:flex-col md:overflow-visible"
       >
         {NAV.map((item) => {
           const active = view === item.id;
@@ -38,8 +39,9 @@ export default function Sidebar({ view, onChange }: SidebarProps) {
                 active ? "text-ink" : "text-muted hover:text-ink"
               }`}
             >
+              {active && <SketchBorder className="pointer-events-none inset-0" style={{ position: "absolute" }} stroke="#999" strokeWidth={0.8} seedKey="active-nav" />}
               <DoodleIcon icon={item.icon} size={20} strokeWidth={1.6} />
-              <span className={active ? "hatch" : ""}>{item.label}</span>
+              <span>{item.label}</span>
             </button>
           );
         })}

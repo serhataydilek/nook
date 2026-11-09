@@ -1,15 +1,79 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-paper: #f9f7f1;
+  --color-paper: #fcf7f1;
   --color-ink: #1b1b1b;
-  --color-muted: #77736d;
-  --color-card: #fffdf8;
-  --color-error: #a6402d;
+  --color-muted: #707070;
+  --color-card: #fcf7f1;
+  --color-error: #1b1b1b;
 
   --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-hand: var(--font-patrick-hand), "Segoe Print", "Bradley Hand", cursive;
 }
+
+/* A single sketchbook page, with room to breathe. */
+.nook-frame {
+  position: relative;
+  width: calc(100% - 48px);
+  max-width: 1600px;
+  min-height: calc(100dvh - 48px);
+  margin: 24px auto;
+  border: 1.5px solid transparent;
+  border-radius: 5px 8px 6px 4px / 8px 4px 7px 5px;
+}
+.nook-frame-outline { inset: -4px; pointer-events: none; }
+.item-card > span { background-color: transparent; }
+.nook-logo { font-size: 60px; }
+.nook-sidebar { width: 252px; padding: 36px 24px; }
+.nook-nav { margin-top: 64px; gap: 18px; }
+.nook-nav button { position: relative; min-height: 54px; gap: 18px; padding: 10px 15px; font-size: 27px; }
+.nook-nav button > svg { width: 26px; height: 26px; }
+.nook-nav button[aria-current="page"] {
+  background: repeating-linear-gradient(130deg, transparent 0 4px, #1b1b1b16 4px 5px);
+  border: 1px solid transparent;
+  border-radius: 9px 6px 10px 7px;
+}
+.nook-header { height: 122px; gap: 48px; padding-inline: 54px; }
+.nook-header input { padding: 14px 18px 14px 54px; font-family: var(--font-hand); font-size: 27px; }
+.nook-header .search-icon { left: 18px; width: 25px; height: 25px; color: var(--color-ink); }
+.nook-header .save-button { min-height: 51px; padding-inline: 28px; font-size: 28px; }
+.nook-main { padding: 39px 54px 42px; }
+.nook-main > h1 { font-size: 44px; }
+.nook-section { margin-top: 39px; }
+.nook-section h2 { margin-bottom: 16px; font-size: 33px; }
+.item-card .card-content { min-height: 128px; padding: 23px 24px; }
+.item-card h3 { font-size: 27px; }
+.item-card .link-icon { width: 30px; height: 30px; margin-top: 7px; }
+.item-card .link-description { font-size: 14px; }
+.item-card .note-body { font-size: 24px; line-height: 1.55; margin-top: 7px; }
+.item-card .note-content { min-height: 184px; }
+.item-card .delete-item { display: grid; place-items: center; min-width: 30px; min-height: 30px; }
+
+@media (max-width: 1199px) {
+  .nook-sidebar { width: 215px; padding-inline: 18px; }
+  .nook-nav button { gap: 12px; font-size: 25px; }
+  .nook-header { padding-inline: 32px; gap: 26px; }
+  .nook-main { padding-inline: 32px; }
+  .item-card .card-content { padding: 20px; }
+}
+@media (max-width: 767px) {
+  .nook-frame { width: calc(100% - 20px); margin: 10px; min-height: calc(100dvh - 20px); }
+  .nook-sidebar { width: 100%; height: auto; padding: 22px 16px 14px; flex-direction: column; align-items: stretch; gap: 20px; }
+  .nook-logo { font-size: 43px; margin-left: 7px; }
+  .nook-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; gap: 4px; overflow: visible; }
+  .nook-nav button { flex-direction: column; gap: 6px; padding: 8px 2px; min-width: 0; font-size: 19px; }
+  .nook-nav button > svg { width: 20px; height: 20px; }
+  .nook-header { height: 88px; padding-inline: 20px; gap: 16px; }
+  .nook-header input { padding: 12px 10px 12px 38px; font-size: 20px; }
+  .nook-header .search-icon { left: 12px; width: 18px; height: 18px; }
+  .nook-header .save-button { min-height: 43px; padding-inline: 18px; font-size: 23px; }
+  .nook-main { padding: 29px 24px 34px; }
+  .nook-main > h1 { font-size: 37px; }
+  .nook-section { margin-top: 30px; }
+  .nook-section h2 { font-size: 29px; }
+  .item-card .delete-item { opacity: .6; }
+}
+@media (hover: none) { .item-card .delete-item { opacity: .6; } }
 
 @layer base {
   html {
@@ -19,7 +83,7 @@
   body {
     background-color: var(--color-paper);
     /* faint paper grain */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.012 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
     color: var(--color-ink);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -61,7 +125,7 @@
   }
 
   /* a focused field inside a sketch box gets a slightly firmer stroke */
-  .sketch-box:focus-within svg rect {
+  .sketch-box:focus-within > svg > path {
     stroke-width: 2.2;
   }
 }

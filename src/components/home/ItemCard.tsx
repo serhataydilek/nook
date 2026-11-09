@@ -13,7 +13,7 @@ export interface ItemCardProps {
 function NoteBody({ content }: { content: string }) {
   const lines = content.split("\n");
   return (
-    <div className="mt-1 font-hand text-[17px] leading-[1.6] text-ink/90">
+    <div className="note-body mt-1 font-hand text-[17px] leading-[1.6] text-ink/90">
       {lines.map((line, i) => {
         const checkbox = line.match(/^\s*\[\s?\]\s?(.*)$/);
         if (checkbox) {
@@ -44,25 +44,26 @@ function NoteBody({ content }: { content: string }) {
 
 export default function ItemCard({ item, onDelete }: ItemCardProps) {
   return (
-    <article className="group relative h-full">
+    <article className="item-card group relative h-full">
       <SketchBorder
         className={`block bg-card transition-transform duration-150 ease-out hover:-rotate-[0.5deg] ${
-          item.type === "image" ? "" : "p-4"
+          item.type === "image" ? "" : `card-content ${item.type === "note" ? "note-content" : ""}`
         }`}
         seedKey={item.id}
+        radius={0.5}
       >
         <button
           type="button"
           onClick={() => onDelete(item.id)}
-          aria-label={`Delete ${item.title}`}
-          className="absolute right-2 top-2 z-20 text-muted opacity-0 transition-opacity hover:text-error focus-visible:opacity-100 group-hover:opacity-100"
+          aria-label={`Delete ${item.title || "saved image"}`}
+          className="delete-item absolute right-2 top-2 z-20 text-muted opacity-0 transition-opacity hover:text-error focus-visible:opacity-100 group-hover:opacity-100"
         >
           <DoodleIcon icon={Trash2} size={15} strokeWidth={1.8} />
         </button>
 
         {item.type === "link" && (
           <div className="flex items-start gap-3">
-            <DoodleIcon icon={Link2} size={20} strokeWidth={1.6} className="mt-1 shrink-0 text-ink" />
+            <DoodleIcon icon={Link2} size={20} strokeWidth={1.6} className="link-icon mt-1 shrink-0 text-ink" />
             <div className="min-w-0">
               <a
                 href={item.url}
@@ -75,7 +76,7 @@ export default function ItemCard({ item, onDelete }: ItemCardProps) {
                 </h3>
               </a>
               {item.description && (
-                <p className="mt-1.5 line-clamp-2 text-[13px] leading-relaxed text-ink/75">
+                <p className="link-description mt-1.5 line-clamp-2 text-[13px] leading-relaxed text-ink/75">
                   {item.description}
                 </p>
               )}

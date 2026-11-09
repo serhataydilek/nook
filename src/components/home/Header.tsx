@@ -14,13 +14,13 @@ export interface HeaderProps {
 
 export default function Header({ query, onQuery, onSave }: HeaderProps) {
   return (
-    <header className="relative flex h-[72px] shrink-0 items-center gap-4 px-5 sm:px-8 lg:px-20">
+    <header className="nook-header relative flex shrink-0 items-center">
       <div className="relative w-full max-w-[820px]">
         <DoodleIcon
           icon={Search}
           size={17}
           strokeWidth={1.8}
-          className="absolute left-3 top-1/2 z-10 -translate-y-1/2 text-muted"
+          className="search-icon absolute top-1/2 z-10 -translate-y-1/2"
         />
         <SketchBorder className="sketch-box block">
           <input
@@ -34,7 +34,7 @@ export default function Header({ query, onQuery, onSave }: HeaderProps) {
         </SketchBorder>
       </div>
       <div className="ml-auto shrink-0">
-        <SketchButton variant="ghost" onClick={onSave} className="px-5 text-xl">
+        <SketchButton variant="ghost" onClick={onSave} className="save-button">
           Save
           {/* little "new!" sparkle */}
           <svg

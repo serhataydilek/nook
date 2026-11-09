@@ -33,7 +33,8 @@ export default function SketchButton({
     >
       <SketchBorder
         stroke={stroke}
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none inset-0"
+        style={{ position: "absolute" }}
       />
       <span className="relative z-10 inline-flex items-center gap-2">{children}</span>
     </button>

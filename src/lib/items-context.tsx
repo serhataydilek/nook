@@ -32,7 +32,7 @@ const ItemsContext = createContext<ItemsContextValue | null>(null);
 const DEV_SEED: SavedItem[] = (() => {
   const svg = (inner: string) =>
     `data:image/svg+xml,${encodeURIComponent(
-      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 125"><rect width="300" height="125" fill="#FFFDF8"/>${inner}</svg>`,
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 125">${inner}</svg>`,
     )}`;
   const ink = "stroke='#1B1B1B' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'";
   const t = 1762600000000;

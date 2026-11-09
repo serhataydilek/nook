@@ -10,6 +10,7 @@ import EmptyState from "./EmptyState";
 import SaveModal from "./SaveModal";
 import SketchPlaceholder from "./SketchPlaceholder";
 import SketchBorder from "../sketch/SketchBorder";
+import SketchLine from "../sketch/SketchLine";
 import SketchButton from "../sketch/SketchButton";
 import CheckDoodle from "../sketch/CheckDoodle";
 import UnderlineText from "../sketch/UnderlineText";
@@ -77,13 +78,19 @@ export default function HomeShell() {
   };
 
   return (
-    <div className="flex min-h-dvh flex-col md:flex-row">
+    <div className="nook-frame flex flex-col md:flex-row">
+      <div className="nook-frame-outline absolute" aria-hidden="true">
+        <SketchLine className="left-0 top-0 h-[5px] w-full" strokeWidth={1.8} />
+        <SketchLine className="bottom-0 left-0 h-[5px] w-full" strokeWidth={1.8} />
+        <SketchLine orientation="v" className="left-0 top-0 h-full w-[5px]" strokeWidth={1.8} />
+        <SketchLine orientation="v" className="right-0 top-0 h-full w-[5px]" strokeWidth={1.8} />
+      </div>
       <Sidebar view={view} onChange={setView} />
 
       <div className="flex min-w-0 flex-1 flex-col">
         <Header query={query} onQuery={setQuery} onSave={() => setModalOpen(true)} />
 
-        <main className="flex-1 px-5 py-7 sm:px-8 sm:py-9 lg:px-20 lg:py-11">
+        <main className="nook-main flex-1">
           {view === "home" ? (
             <>
               <h1 className="group w-fit font-hand text-[32px] leading-tight">
@@ -98,7 +105,7 @@ export default function HomeShell() {
                   const list = visible.filter((it) => it.type === s.type);
                   if (list.length === 0) return null;
                   return (
-                    <section key={s.type} className="mt-10 first:mt-8">
+                    <section key={s.type} className="nook-section">
                       <h2 className="mb-4 font-hand text-2xl">{s.title}</h2>
                       <ItemGrid items={list} onDelete={deleteItem} className={s.cols} />
                     </section>
