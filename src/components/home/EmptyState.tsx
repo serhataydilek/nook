@@ -9,18 +9,15 @@ export interface EmptyStateProps {
 
 /**
  * The "unfinished notebook page" shown when nothing has been saved yet.
+ * Single thin border, faint ruled lines, no extra decoration.
  */
 export default function EmptyState({ onSave }: EmptyStateProps) {
   return (
-    <SketchBorder
-      dash
-      double
-      className="notebook-lines sketch-radius mt-4 block bg-card px-6 py-14 text-center sm:px-16 sm:py-20"
-    >
+    <SketchBorder className="notebook-lines mt-8 block bg-card px-6 py-14 text-center sm:px-16">
       {/* an unfinished scribble, as if the pen stopped mid-line */}
       <svg
         viewBox="0 0 220 24"
-        className="mx-auto h-6 w-48 text-ink/60"
+        className="mx-auto h-5 w-44 text-ink/60"
         fill="none"
         aria-hidden="true"
       >
@@ -29,17 +26,15 @@ export default function EmptyState({ onSave }: EmptyStateProps) {
           stroke="currentColor"
           strokeWidth="2"
           strokeLinecap="round"
-          strokeDasharray="1"
-          pathLength={1}
         />
       </svg>
-      <h2 className="mt-4 font-hand text-3xl sm:text-4xl">this page is still blank…</h2>
-      <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-muted sm:text-base">
+      <h2 className="mt-4 font-hand text-3xl">this page is still blank…</h2>
+      <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-muted">
         nothing saved yet — your little corner of the internet is waiting. drop in a
         link, an image, or a note.
       </p>
-      <SketchButton variant="primary" onClick={onSave} className="mt-6">
-        <DoodleIcon icon={Plus} size={18} strokeWidth={2.2} />
+      <SketchButton variant="ghost" onClick={onSave} className="mt-6">
+        <DoodleIcon icon={Plus} size={17} strokeWidth={2} />
         save your first thing
       </SketchButton>
     </SketchBorder>

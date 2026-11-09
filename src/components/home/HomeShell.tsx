@@ -25,7 +25,7 @@ const SECTIONS: { type: ItemType; title: string; cols: string }[] = [
 
 function NoResults({ query, onClear }: { query: string; onClear: () => void }) {
   return (
-    <SketchBorder className="sketch-radius mt-6 block bg-card px-6 py-10 text-center">
+    <SketchBorder className="mt-8 block bg-card px-6 py-10 text-center">
       <p className="font-hand text-2xl">
         nothing matches {query ? `“${query}”` : "that filter"}…
       </p>
@@ -77,64 +77,57 @@ export default function HomeShell() {
   };
 
   return (
-    <div className="min-h-dvh p-2 sm:p-3">
-      {/* one big sheet of paper: outer frame + sidebar/content dividers */}
-      <div className="relative mx-auto flex min-h-[calc(100dvh-1rem)] w-full max-w-6xl flex-col sm:min-h-[calc(100dvh-1.5rem)] md:flex-row">
-        <span className="pointer-events-none absolute inset-0 z-30 block">
-          <SketchBorder className="block h-full w-full" strokeWidth={2} seedKey="app-frame" />
-        </span>
+    <div className="flex min-h-dvh flex-col md:flex-row">
+      <Sidebar view={view} onChange={setView} />
 
-        <Sidebar view={view} onChange={setView} />
+      <div className="flex min-w-0 flex-1 flex-col">
+        <Header query={query} onQuery={setQuery} onSave={() => setModalOpen(true)} />
 
-        <div className="flex min-w-0 flex-1 flex-col">
-          <Header query={query} onQuery={setQuery} onSave={() => setModalOpen(true)} />
-
-          <main className="flex-1 px-4 pb-16 pt-6 sm:px-8 sm:pt-8">
-            {view === "home" ? (
-              <>
-                <h1 className="group w-fit font-hand text-4xl">
-                  <UnderlineText>Hi there!</UnderlineText>
-                </h1>
-                {items.length === 0 ? (
-                  <EmptyState onSave={() => setModalOpen(true)} />
-                ) : visible.length === 0 ? (
-                  <NoResults query={query} onClear={clearSearch} />
-                ) : (
-                  SECTIONS.map((s) => {
-                    const list = visible.filter((it) => it.type === s.type);
-                    if (list.length === 0) return null;
-                    return (
-                      <section key={s.type} className="mt-8 first:mt-7">
-                        <h2 className="mb-3 font-hand text-2xl">{s.title}</h2>
-                        <ItemGrid items={list} onDelete={deleteItem} className={s.cols} />
-                      </section>
-                    );
-                  })
-                )}
-              </>
-            ) : view === "all" ? (
-              <>
-                <div className="mb-5 flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
-                  <h1 className="font-hand text-3xl">Saved</h1>
-                  <FilterBar filter={filter} onChange={setFilter} items={items} />
-                </div>
-                {visible.length === 0 ? (
-                  <NoResults query={query} onClear={clearSearch} />
-                ) : (
-                  <ItemGrid items={visible} onDelete={deleteItem} className="lg:grid-cols-3" />
-                )}
-              </>
-            ) : view === "collections" ? (
-              <SketchPlaceholder title="collections" icon={Folder}>
-                still being sketched — named collections arrive with the next milestone.
-              </SketchPlaceholder>
-            ) : (
-              <SketchPlaceholder title="settings" icon={Settings}>
-                still being sketched — account &amp; app settings arrive with the next milestone.
-              </SketchPlaceholder>
-            )}
-          </main>
-        </div>
+        <main className="flex-1 px-5 py-7 sm:px-8 sm:py-9 lg:px-20 lg:py-11">
+          {view === "home" ? (
+            <>
+              <h1 className="group w-fit font-hand text-[32px] leading-tight">
+                <UnderlineText>Hi there!</UnderlineText>
+              </h1>
+              {items.length === 0 ? (
+                <EmptyState onSave={() => setModalOpen(true)} />
+              ) : visible.length === 0 ? (
+                <NoResults query={query} onClear={clearSearch} />
+              ) : (
+                SECTIONS.map((s) => {
+                  const list = visible.filter((it) => it.type === s.type);
+                  if (list.length === 0) return null;
+                  return (
+                    <section key={s.type} className="mt-10 first:mt-8">
+                      <h2 className="mb-4 font-hand text-2xl">{s.title}</h2>
+                      <ItemGrid items={list} onDelete={deleteItem} className={s.cols} />
+                    </section>
+                  );
+                })
+              )}
+            </>
+          ) : view === "all" ? (
+            <>
+              <div className="mb-6 flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
+                <h1 className="font-hand text-[32px] leading-tight">Saved</h1>
+                <FilterBar filter={filter} onChange={setFilter} items={items} />
+              </div>
+              {visible.length === 0 ? (
+                <NoResults query={query} onClear={clearSearch} />
+              ) : (
+                <ItemGrid items={visible} onDelete={deleteItem} className="lg:grid-cols-3" />
+              )}
+            </>
+          ) : view === "collections" ? (
+            <SketchPlaceholder title="collections" icon={Folder}>
+              still being sketched — named collections arrive with the next milestone.
+            </SketchPlaceholder>
+          ) : (
+            <SketchPlaceholder title="settings" icon={Settings}>
+              still being sketched — account &amp; app settings arrive with the next milestone.
+            </SketchPlaceholder>
+          )}
+        </main>
       </div>
 
       {modalOpen && (
@@ -145,7 +138,7 @@ export default function HomeShell() {
         <div aria-live="polite" className="fixed bottom-6 left-1/2 z-50 animate-toast">
           <SketchBorder
             role="status"
-            className="sketch-radius sketch-shadow flex items-center gap-2 bg-card px-4 py-2"
+            className="flex items-center gap-2 bg-card px-4 py-2"
           >
             <CheckDoodle className="h-5 w-5 text-ink" />
             <span className="font-hand text-lg">{toast}</span>

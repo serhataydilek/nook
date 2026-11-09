@@ -33,12 +33,12 @@ export default function SketchLine({
         <filter id={id} x="-100%" y="-100%" width="300%" height="300%">
           <feTurbulence
             type="fractalNoise"
-            baseFrequency={horizontal ? "0.02 0.09" : "0.09 0.02"}
+            baseFrequency={horizontal ? "0.008 0.05" : "0.05 0.008"}
             numOctaves="2"
             seed={5}
             result="n"
           />
-          <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="1.3" />
         </filter>
       </defs>
       {horizontal ? (

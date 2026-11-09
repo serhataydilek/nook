@@ -31,6 +31,9 @@ export default function SketchBorder({
   seedKey,
   role,
 }: SketchBorderProps) {
+  // steady-hand wobble: long, gentle waves, tiny displacement
+  const BASE_FREQ = "0.008 0.02";
+  const SCALE = 1.4;
   const rawId = useId();
   const id = `sk${rawId.replace(/[^a-zA-Z0-9]/g, "")}`;
   const src = String(seedKey ?? rawId);
@@ -53,7 +56,7 @@ export default function SketchBorder({
           <filter id={id} x="-10%" y="-10%" width="120%" height="120%">
             <feTurbulence
               type="fractalNoise"
-              baseFrequency="0.02 0.045"
+              baseFrequency={BASE_FREQ}
               numOctaves="2"
               seed={seed}
               result="noise"
@@ -61,7 +64,7 @@ export default function SketchBorder({
             <feDisplacementMap
               in="SourceGraphic"
               in2="noise"
-              scale="3"
+              scale={SCALE}
               xChannelSelector="R"
               yChannelSelector="G"
             />
@@ -70,7 +73,7 @@ export default function SketchBorder({
             <filter id={`${id}b`} x="-10%" y="-10%" width="120%" height="120%">
               <feTurbulence
                 type="fractalNoise"
-                baseFrequency="0.035 0.06"
+                baseFrequency="0.012 0.03"
                 numOctaves="2"
                 seed={seed + 13}
                 result="noise"
@@ -78,7 +81,7 @@ export default function SketchBorder({
               <feDisplacementMap
                 in="SourceGraphic"
                 in2="noise"
-                scale="2.4"
+                scale={SCALE * 0.8}
                 xChannelSelector="R"
                 yChannelSelector="G"
               />
@@ -90,7 +93,7 @@ export default function SketchBorder({
           y="1.6"
           width="97.6"
           height="96.8"
-          rx="5"
+          rx="4"
           fill="none"
           stroke={stroke}
           strokeWidth={strokeWidth}
@@ -105,7 +108,7 @@ export default function SketchBorder({
             y="3"
             width="94.8"
             height="94"
-            rx="7"
+            rx="4"
             fill="none"
             stroke={stroke}
             strokeWidth={strokeWidth * 0.7}

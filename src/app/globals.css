@@ -5,7 +5,6 @@
   --color-ink: #1b1b1b;
   --color-muted: #77736d;
   --color-card: #fffdf8;
-  --color-accent: #f1db83;
   --color-error: #a6402d;
 
   --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -20,80 +19,50 @@
   body {
     background-color: var(--color-paper);
     /* faint paper grain */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
     color: var(--color-ink);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
 
   ::selection {
-    background: var(--color-accent);
-    color: var(--color-ink);
+    background: rgb(27 27 27 / 0.14);
   }
 
-  /* hand-drawn dashed focus ring */
   :focus-visible {
-    outline: 2px dashed var(--color-ink);
-    outline-offset: 3px;
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
     border-radius: 2px;
   }
 
-  /* wobbly "hand-cut" fill shapes */
-  .sketch-radius {
-    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
-  }
-  .sketch-radius-sm {
-    border-radius: 125px 10px 115px 10px / 10px 115px 10px 125px;
-  }
-
-  /* highlighter mark behind active nav / filter labels */
-  .highlighter {
-    display: inline-block;
-    background-color: var(--color-accent);
-    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
-    padding: 0 0.35rem;
-    transform: rotate(-1deg);
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
-  }
-
-  /* pencil hatching for the active nav item (like the reference) */
+  /* pencil hatching for the active nav / filter item */
   .hatch {
     display: inline-block;
     background-image: repeating-linear-gradient(
       45deg,
-      rgb(27 27 27 / 0.16) 0,
-      rgb(27 27 27 / 0.16) 1px,
+      rgb(27 27 27 / 0.15) 0,
+      rgb(27 27 27 / 0.15) 1px,
       transparent 1px,
       transparent 6px
     );
-    border-radius: 125px 10px 115px 10px / 10px 115px 10px 125px;
-    padding: 0 0.5rem;
+    border-radius: 3px 6px 4px 7px / 6px 4px 7px 3px;
+    padding: 0 0.45rem;
   }
 
-  /* faint ruled lines for notebook-page surfaces */
+  /* faint ruled lines, used only on the empty notebook page */
   .notebook-lines {
     background-image: repeating-linear-gradient(
       to bottom,
       transparent 0,
       transparent 30px,
-      rgb(27 27 27 / 0.06) 30px,
-      rgb(27 27 27 / 0.06) 31px
+      rgb(27 27 27 / 0.05) 30px,
+      rgb(27 27 27 / 0.05) 31px
     );
   }
 
-  /* thicker pen stroke when a sketch box contains a focused field */
+  /* a focused field inside a sketch box gets a slightly firmer stroke */
   .sketch-box:focus-within svg rect {
-    stroke-width: 2.4;
-  }
-}
-
-@layer utilities {
-  .sketch-shadow {
-    box-shadow: 2.5px 3px 0 0 rgb(27 27 27 / 0.1);
-  }
-  .sketch-shadow-lg {
-    box-shadow: 4px 6px 0 0 rgb(27 27 27 / 0.12);
+    stroke-width: 2.2;
   }
 }
 
@@ -136,12 +105,12 @@
 
 /* restrained entrance animations */
 .animate-fade-rise {
-  animation: fade-rise 0.35s ease-out both;
+  animation: fade-rise 0.3s ease-out both;
 }
 @keyframes fade-rise {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -149,7 +118,7 @@
   }
 }
 .animate-fade {
-  animation: fade-in 0.2s ease-out both;
+  animation: fade-in 0.18s ease-out both;
 }
 @keyframes fade-in {
   from {
@@ -165,7 +134,7 @@
 @keyframes toast-in {
   from {
     opacity: 0;
-    transform: translate(-50%, 12px) rotate(-2deg);
+    transform: translate(-50%, 10px) rotate(-2deg);
   }
   to {
     opacity: 1;

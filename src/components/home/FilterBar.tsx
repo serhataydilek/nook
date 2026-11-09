@@ -35,7 +35,7 @@ export default function FilterBar({ filter, onChange, items }: FilterBarProps) {
               active ? "text-ink" : "text-muted hover:text-ink"
             }`}
           >
-            <span className={active ? "highlighter" : ""}>{f.label}</span>
+            <span className={active ? "hatch" : ""}>{f.label}</span>
             <span className="ml-1 align-super font-sans text-xs text-muted">
               {countFor(f.id, items)}
             </span>

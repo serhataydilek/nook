@@ -75,9 +75,7 @@ export default function SketchModal({ open, onClose, title, children }: SketchMo
         aria-hidden="true"
         onClick={onClose}
       />
-      <SketchBorder
-        className="sketch-radius animate-fade-rise sketch-shadow-lg relative z-10 block max-h-[90dvh] w-full max-w-md overflow-y-auto bg-card p-5 sm:p-6"
-      >
+      <SketchBorder className="animate-fade-rise relative z-10 block max-h-[90dvh] w-full max-w-md overflow-y-auto bg-card p-5 sm:p-6">
         <div
           ref={panelRef}
           role="dialog"

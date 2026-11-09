@@ -14,14 +14,15 @@ export interface HeaderProps {
 
 export default function Header({ query, onQuery, onSave }: HeaderProps) {
   return (
-    <header className="relative flex items-center gap-3 px-4 py-4 sm:px-7 sm:py-5">
-      <div className="relative w-full max-w-xl">
+    <header className="relative flex h-[72px] shrink-0 items-center gap-4 px-5 sm:px-8 lg:px-20">
+      <div className="relative w-full max-w-[820px]">
         <DoodleIcon
           icon={Search}
           size={17}
+          strokeWidth={1.8}
           className="absolute left-3 top-1/2 z-10 -translate-y-1/2 text-muted"
         />
-        <SketchBorder className="sketch-box block bg-card">
+        <SketchBorder className="sketch-box block">
           <input
             type="search"
             value={query}
@@ -37,7 +38,7 @@ export default function Header({ query, onQuery, onSave }: HeaderProps) {
           Save
           {/* little "new!" sparkle */}
           <svg
-            className="absolute -right-1 -top-2.5 h-4 w-4 text-ink"
+            className="absolute -right-1 -top-2 h-4 w-4 text-ink"
             viewBox="0 0 16 16"
             fill="none"
             aria-hidden="true"
@@ -51,7 +52,7 @@ export default function Header({ query, onQuery, onSave }: HeaderProps) {
           </svg>
         </SketchButton>
       </div>
-      <SketchLine orientation="h" className="bottom-0 left-0 h-[6px] w-full" />
+      <SketchLine orientation="h" strokeWidth={1.8} className="bottom-0 left-0 h-[5px] w-full" />
     </header>
   );
 }

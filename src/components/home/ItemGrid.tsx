@@ -10,14 +10,14 @@ export interface ItemGridProps {
 
 export default function ItemGrid({ items, onDelete, className = "" }: ItemGridProps) {
   return (
-    <ul className={`grid grid-cols-1 gap-4 sm:grid-cols-2 ${className}`}>
+    <ul className={`grid grid-cols-1 gap-6 sm:grid-cols-2 ${className}`}>
       {items.map((item, i) => (
         <li
           key={item.id}
           className="animate-fade-rise"
-          style={{ animationDelay: `${Math.min(i, 12) * 45}ms` }}
+          style={{ animationDelay: `${Math.min(i, 12) * 40}ms` }}
         >
-          <ItemCard item={item} index={i} onDelete={onDelete} />
+          <ItemCard item={item} onDelete={onDelete} />
         </li>
       ))}
     </ul>

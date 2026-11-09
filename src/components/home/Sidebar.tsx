@@ -20,11 +20,11 @@ export interface SidebarProps {
 
 export default function Sidebar({ view, onChange }: SidebarProps) {
   return (
-    <aside className="relative flex items-center gap-3 px-4 py-4 md:w-56 md:shrink-0 md:flex-col md:items-stretch md:gap-2 md:px-7 md:py-8">
+    <aside className="relative flex h-16 shrink-0 items-center gap-4 px-5 md:h-auto md:w-[264px] md:flex-col md:items-stretch md:gap-0 md:px-8 md:py-9">
       <Logo />
       <nav
         aria-label="Main navigation"
-        className="flex gap-1 overflow-x-auto md:mt-5 md:flex-col md:overflow-visible"
+        className="flex gap-1 overflow-x-auto md:mt-12 md:flex-col md:overflow-visible"
       >
         {NAV.map((item) => {
           const active = view === item.id;
@@ -34,19 +34,19 @@ export default function Sidebar({ view, onChange }: SidebarProps) {
               type="button"
               onClick={() => onChange(item.id)}
               aria-current={active ? "page" : undefined}
-              className={`flex shrink-0 items-center gap-2.5 whitespace-nowrap px-3 py-2 font-hand text-lg transition-transform duration-150 hover:-rotate-1 ${
+              className={`flex shrink-0 items-center gap-3 whitespace-nowrap px-3 py-2.5 font-hand text-xl transition-transform duration-150 hover:-rotate-[0.6deg] ${
                 active ? "text-ink" : "text-muted hover:text-ink"
               }`}
             >
-              <DoodleIcon icon={item.icon} size={19} />
+              <DoodleIcon icon={item.icon} size={20} strokeWidth={1.6} />
               <span className={active ? "hatch" : ""}>{item.label}</span>
             </button>
           );
         })}
       </nav>
       {/* dividers: horizontal on mobile, vertical on desktop */}
-      <SketchLine orientation="h" className="bottom-0 left-0 h-[6px] w-full md:hidden" />
-      <SketchLine orientation="v" className="right-0 top-0 hidden h-full w-[6px] md:block" />
+      <SketchLine orientation="h" strokeWidth={1.8} className="bottom-0 left-0 h-[5px] w-full md:hidden" />
+      <SketchLine orientation="v" strokeWidth={1.8} className="right-0 top-0 hidden h-full w-[5px] md:block" />
     </aside>
   );
 }

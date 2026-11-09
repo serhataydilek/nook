@@ -250,7 +250,7 @@ export default function SaveModal({ open, onClose, onSave }: SaveModalProps) {
             </>
           )}
 
-          <SketchButton variant="primary" type="submit" className="mt-1 w-full">
+          <SketchButton variant="ghost" type="submit" className="mt-1 w-full">
             save to my nook
           </SketchButton>
         </form>
