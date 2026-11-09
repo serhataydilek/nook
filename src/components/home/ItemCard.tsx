@@ -48,28 +48,31 @@ export default function ItemCard({ item, index, onDelete }: ItemCardProps) {
         </p>
 
         {item.type === "link" && (
-          <div>
-            <a
-              href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block pr-6"
-            >
-              <h3 className="font-hand text-xl leading-snug">
-                <UnderlineText>{item.title || item.url}</UnderlineText>
-              </h3>
-            </a>
-            {item.url && (
-              <p className="mt-1 flex items-center gap-1 text-xs text-muted">
-                <DoodleIcon icon={ExternalLink} size={12} strokeWidth={2} />
-                {getDomain(item.url)}
-              </p>
-            )}
-            {item.description && (
-              <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-ink/80">
-                {item.description}
-              </p>
-            )}
+          <div className="flex items-start gap-3">
+            <DoodleIcon icon={LinkIcon} size={20} className="mt-1 shrink-0 text-muted" />
+            <div className="min-w-0">
+              <a
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block pr-6"
+              >
+                <h3 className="font-hand text-xl leading-snug">
+                  <UnderlineText>{item.title || item.url}</UnderlineText>
+                </h3>
+              </a>
+              {item.url && (
+                <p className="mt-1 flex items-center gap-1 text-xs text-muted">
+                  <DoodleIcon icon={ExternalLink} size={12} strokeWidth={2} />
+                  {getDomain(item.url)}
+                </p>
+              )}
+              {item.description && (
+                <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-ink/80">
+                  {item.description}
+                </p>
+              )}
+            </div>
           </div>
         )}
 

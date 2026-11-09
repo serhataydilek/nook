@@ -12,13 +12,20 @@ import SketchPlaceholder from "./SketchPlaceholder";
 import SketchBorder from "../sketch/SketchBorder";
 import SketchButton from "../sketch/SketchButton";
 import CheckDoodle from "../sketch/CheckDoodle";
+import UnderlineText from "../sketch/UnderlineText";
 import { useItems } from "@/lib/items-context";
 import { getDomain } from "@/lib/utils";
-import type { Filter, NewSavedItem, View } from "@/lib/types";
+import type { Filter, ItemType, NewSavedItem, View } from "@/lib/types";
+
+const SECTIONS: { type: ItemType; title: string; cols: string }[] = [
+  { type: "link", title: "Links", cols: "lg:grid-cols-3" },
+  { type: "note", title: "Notes", cols: "lg:grid-cols-2" },
+  { type: "image", title: "Images", cols: "lg:grid-cols-3" },
+];
 
 function NoResults({ query, onClear }: { query: string; onClear: () => void }) {
   return (
-    <SketchBorder className="sketch-radius mt-4 block bg-card px-6 py-10 text-center">
+    <SketchBorder className="sketch-radius mt-6 block bg-card px-6 py-10 text-center">
       <p className="font-hand text-2xl">
         nothing matches {query ? `“${query}”` : "that filter"}…
       </p>
@@ -64,51 +71,71 @@ export default function HomeShell() {
     setToast("saved to your nook");
   };
 
-  const showGrid = view === "home" || view === "all";
+  const clearSearch = () => {
+    setQuery("");
+    setFilter("all");
+  };
 
   return (
-    <div className="flex min-h-dvh flex-col">
-      <Header query={query} onQuery={setQuery} onSave={() => setModalOpen(true)} />
+    <div className="min-h-dvh p-2 sm:p-3">
+      {/* one big sheet of paper: outer frame + sidebar/content dividers */}
+      <div className="relative mx-auto flex min-h-[calc(100dvh-1rem)] w-full max-w-6xl flex-col sm:min-h-[calc(100dvh-1.5rem)] md:flex-row">
+        <span className="pointer-events-none absolute inset-0 z-30 block">
+          <SketchBorder className="block h-full w-full" strokeWidth={2} seedKey="app-frame" />
+        </span>
 
-      <div className="mx-auto flex w-full max-w-6xl flex-1 gap-2 px-4 pt-6 sm:gap-6 sm:px-6">
         <Sidebar view={view} onChange={setView} />
 
-        <main className="min-w-0 flex-1 pb-16">
-          {showGrid ? (
-            <>
-              <div className="mb-5 flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
-                <h1 className="font-hand text-3xl">{view === "home" ? "your nook" : "all saved"}</h1>
-                <FilterBar filter={filter} onChange={setFilter} items={items} />
-              </div>
-              {items.length === 0 ? (
-                <EmptyState onSave={() => setModalOpen(true)} />
-              ) : visible.length === 0 ? (
-                <NoResults
-                  query={query}
-                  onClear={() => {
-                    setQuery("");
-                    setFilter("all");
-                  }}
-                />
-              ) : (
-                <ItemGrid items={visible} onDelete={deleteItem} />
-              )}
-            </>
-          ) : view === "collections" ? (
-            <SketchPlaceholder title="collections" icon={Folder}>
-              still being sketched — named collections arrive with the next milestone.
-            </SketchPlaceholder>
-          ) : (
-            <SketchPlaceholder title="settings" icon={Settings}>
-              still being sketched — account &amp; app settings arrive with the next milestone.
-            </SketchPlaceholder>
-          )}
-        </main>
-      </div>
+        <div className="flex min-w-0 flex-1 flex-col">
+          <Header query={query} onQuery={setQuery} onSave={() => setModalOpen(true)} />
 
-      <footer className="mt-auto px-4 pb-4 text-center font-hand text-sm text-muted">
-        nook — your little corner of the internet
-      </footer>
+          <main className="flex-1 px-4 pb-16 pt-6 sm:px-8 sm:pt-8">
+            {view === "home" ? (
+              <>
+                <h1 className="group w-fit font-hand text-4xl">
+                  <UnderlineText>Hi there!</UnderlineText>
+                </h1>
+                {items.length === 0 ? (
+                  <EmptyState onSave={() => setModalOpen(true)} />
+                ) : visible.length === 0 ? (
+                  <NoResults query={query} onClear={clearSearch} />
+                ) : (
+                  SECTIONS.map((s) => {
+                    const list = visible.filter((it) => it.type === s.type);
+                    if (list.length === 0) return null;
+                    return (
+                      <section key={s.type} className="mt-8 first:mt-7">
+                        <h2 className="mb-3 font-hand text-2xl">{s.title}</h2>
+                        <ItemGrid items={list} onDelete={deleteItem} className={s.cols} />
+                      </section>
+                    );
+                  })
+                )}
+              </>
+            ) : view === "all" ? (
+              <>
+                <div className="mb-5 flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
+                  <h1 className="font-hand text-3xl">Saved</h1>
+                  <FilterBar filter={filter} onChange={setFilter} items={items} />
+                </div>
+                {visible.length === 0 ? (
+                  <NoResults query={query} onClear={clearSearch} />
+                ) : (
+                  <ItemGrid items={visible} onDelete={deleteItem} className="lg:grid-cols-3" />
+                )}
+              </>
+            ) : view === "collections" ? (
+              <SketchPlaceholder title="collections" icon={Folder}>
+                still being sketched — named collections arrive with the next milestone.
+              </SketchPlaceholder>
+            ) : (
+              <SketchPlaceholder title="settings" icon={Settings}>
+                still being sketched — account &amp; app settings arrive with the next milestone.
+              </SketchPlaceholder>
+            )}
+          </main>
+        </div>
+      </div>
 
       {modalOpen && (
         <SaveModal open onClose={() => setModalOpen(false)} onSave={handleSave} />

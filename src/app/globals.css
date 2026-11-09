@@ -57,6 +57,20 @@
     -webkit-box-decoration-break: clone;
   }
 
+  /* pencil hatching for the active nav item (like the reference) */
+  .hatch {
+    display: inline-block;
+    background-image: repeating-linear-gradient(
+      45deg,
+      rgb(27 27 27 / 0.16) 0,
+      rgb(27 27 27 / 0.16) 1px,
+      transparent 1px,
+      transparent 6px
+    );
+    border-radius: 125px 10px 115px 10px / 10px 115px 10px 125px;
+    padding: 0 0.5rem;
+  }
+
   /* faint ruled lines for notebook-page surfaces */
   .notebook-lines {
     background-image: repeating-linear-gradient(

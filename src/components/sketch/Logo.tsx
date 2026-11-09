@@ -1,14 +1,14 @@
 import Link from "next/link";
+import UnderlineText from "./UnderlineText";
 
 export default function Logo() {
   return (
     <Link
       href="/"
       aria-label="nook — home"
-      className="group inline-block font-hand text-[32px] leading-none tracking-tight text-ink"
+      className="group w-fit font-hand text-[34px] leading-none tracking-tight text-ink"
     >
-      <span className="highlighter">nook</span>
-      <span>.</span>
+      <UnderlineText>nook.</UnderlineText>
     </Link>
   );
 }

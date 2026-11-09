@@ -43,7 +43,7 @@ export default function SketchBorder({
     <span className={`relative ${className}`} style={style} role={role}>
       {children}
       <svg
-        className="pointer-events-none absolute inset-0 z-10 h-full w-full"
+        className="pointer-events-none absolute inset-0 z-10 h-full w-full overflow-visible"
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
         aria-hidden="true"
