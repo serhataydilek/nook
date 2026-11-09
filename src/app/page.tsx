@@ -1,10 +1,10 @@
-import { ItemsProvider } from "@/lib/items-context";
+import { NookProvider } from "@/lib/store";
 import HomeShell from "@/components/home/HomeShell";
 
 export default function HomePage() {
   return (
-    <ItemsProvider>
+    <NookProvider>
       <HomeShell />
-    </ItemsProvider>
+    </NookProvider>
   );
 }

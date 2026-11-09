@@ -8,12 +8,12 @@ export interface EmptyStateProps {
 }
 
 /**
- * The "unfinished notebook page" shown when nothing has been saved yet.
+ * The "unfinished notebook page" shown when the desk is empty.
  * Single thin border, faint ruled lines, no extra decoration.
  */
 export default function EmptyState({ onSave }: EmptyStateProps) {
   return (
-    <SketchBorder className="notebook-lines mt-8 block bg-card px-6 py-14 text-center sm:px-16">
+    <SketchBorder className="notebook-lines mt-8 block px-6 py-14 text-center sm:px-16">
       {/* an unfinished scribble, as if the pen stopped mid-line */}
       <svg
         viewBox="0 0 220 24"
@@ -28,14 +28,14 @@ export default function EmptyState({ onSave }: EmptyStateProps) {
           strokeLinecap="round"
         />
       </svg>
-      <h2 className="mt-4 font-hand text-3xl">this page is still blank…</h2>
-      <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-muted">
-        nothing saved yet — your little corner of the internet is waiting. drop in a
-        link, an image, or a note.
+      <h2 className="mt-4 font-hand text-3xl">your desk is empty…</h2>
+      <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted">
+        paste a link, drop an image, or type a note — it lands right here on your desk.
+        organize later, if ever.
       </p>
       <SketchButton variant="ghost" onClick={onSave} className="mt-6">
         <DoodleIcon icon={Plus} size={17} strokeWidth={2} />
-        save your first thing
+        save something
       </SketchButton>
     </SketchBorder>
   );

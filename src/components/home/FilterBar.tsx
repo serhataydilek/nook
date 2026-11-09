@@ -1,12 +1,14 @@
 "use client";
 
-import type { Filter, ItemType, SavedItem } from "@/lib/types";
+import type { Filter, SavedItem } from "@/lib/types";
 
 const FILTERS: { id: Filter; label: string }[] = [
   { id: "all", label: "All" },
   { id: "link", label: "Links" },
   { id: "image", label: "Images" },
   { id: "note", label: "Notes" },
+  { id: "list", label: "Lists" },
+  { id: "drawing", label: "Drawings" },
 ];
 
 export interface FilterBarProps {
@@ -17,7 +19,7 @@ export interface FilterBarProps {
 
 function countFor(filter: Filter, items: SavedItem[]): number {
   if (filter === "all") return items.length;
-  return items.filter((it) => it.type === (filter as ItemType)).length;
+  return items.filter((it) => it.type === filter).length;
 }
 
 export default function FilterBar({ filter, onChange, items }: FilterBarProps) {
